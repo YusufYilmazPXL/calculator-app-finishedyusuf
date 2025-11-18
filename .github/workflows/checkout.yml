@@ -1,0 +1,16 @@
+name: Checkout Example
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+    checkout-example:
+      runs-on: ubuntu-latest
+      steps:
+       - name: Checkout code
+         uses: actions/checkout@v4
+         
+       - name: Verify files
+         run: ls -alhR
+
