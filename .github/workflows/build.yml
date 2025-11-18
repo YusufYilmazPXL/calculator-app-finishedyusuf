@@ -4,22 +4,7 @@ on:
   workflow_dispatch:
   push:
 
-jobs:
-  dependencies_example:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: setup node.js
-        uses: actions/setup-node@v4
-        with: 
-          node-version: '20'
-      - name: Verify files
-        run: ls -alhR
-
-        
+jobs:      
   build_example:
     runs-on: ubuntu-latest
 
@@ -30,6 +15,8 @@ jobs:
         uses: actions/setup-node@v4
         with: 
           node-version:  '20'
+      - name: Verify files
+        run: ls -alhR
       - name: bundle code into a zip
         run: 
           npm install
