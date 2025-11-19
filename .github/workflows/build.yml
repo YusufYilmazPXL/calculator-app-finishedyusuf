@@ -1,26 +1,41 @@
-name: build_example
+name: Build Example
 
 on:
   push:
 
-jobs:       
+jobs:
   build_example:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: setup node.js
+
+      # Setup Node/NPM
+      - name: Setup Node.js
         uses: actions/setup-node@v4
-        with: 
-          node-version:  '20'
-      - name: Verify files
-        run: ls -alhR
-      - name: bundle code into a zip
+        with:
+          node-version: '20'
+
+      # Install dependencies
+      - name: Install dependencies
         run: npm install
-      - name: bundle code into zip
-        run: zip -r app.bundle.zip . -x "*.git*" 
+
+      # Run unit tests and generate a report
+      - name: Run unit tests
+        run: 
+          mkdir -p test-results && npm test -- --reporter junit --reporter-options output=test-results/junit.xml
+
+      # Verify files
+      - name: List files
+        run: ls -alhR
+
+      # Bundle code + node_modules into a ZIP
+      - name: Bundle code into zip
+        run: zip -r app.bundle.zip . -x "*.git*"
+
       - name: Better Test Reports Action
         uses: mridang/action-test-reporter@v1.7.0
-        with: 
-          skip-coverage: true
+        with:
+          path: test-results/junit.xml
