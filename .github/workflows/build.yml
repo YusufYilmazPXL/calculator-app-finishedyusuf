@@ -20,4 +20,6 @@ jobs:
       - name: bundle code into a zip
         run: 
           npm install
+      - name: bundle code into zip
+        run:
           zip -r app.bundle.zip . -x "*.git*" 
