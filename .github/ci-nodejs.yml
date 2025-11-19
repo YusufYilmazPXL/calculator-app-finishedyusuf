@@ -1,0 +1,47 @@
+name: CI Node.js
+
+# Trigger de workflow bij push naar main en bij pull requests
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Stap 1: Checkout de code van de repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          repository: PXL-2TIN-DevOps-Resources/calculator-app-finished
+
+      # Stap 2: Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Pas aan indien een andere versie nodig is
+
+      # Stap 3: Installeer dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Stap 4: Run unit tests
+      - name: Run unit tests
+        run: npm test
+
+      # Stap 5: Genereer test coverage rapport
+      - name: Generate coverage report
+        run: npm run coverage
+
+      # Stap 6: Upload test results als artifact
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: coverage/
+
