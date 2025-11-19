@@ -1,7 +1,6 @@
 name: build_example
 
 on:
-  workflow_dispatch:
   push:
 
 jobs:       
@@ -18,10 +17,8 @@ jobs:
       - name: Verify files
         run: ls -alhR
       - name: bundle code into a zip
-        run: 
-          npm install
+        run: npm install
       - name: bundle code into zip
-        run:
-          zip -r app.bundle.zip . -x "*.git*" 
+        run: zip -r app.bundle.zip . -x "*.git*" 
       - name: Better Test Reports Action
         uses: mridang/action-test-reporter@v1.7.0
