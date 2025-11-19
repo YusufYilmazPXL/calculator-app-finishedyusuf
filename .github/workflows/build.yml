@@ -23,3 +23,7 @@ jobs:
       - name: bundle code into zip
         run:
           zip -r app.bundle.zip . -x "*.git*" 
+      - name: Better Test Reports Action
+        uses: mridang/action-test-reporter@v1.7.0
+
+  uses: mridang/action-test-reporter@v1.7.0
